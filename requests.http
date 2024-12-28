@@ -1,0 +1,40 @@
+POST http://localhost:7777/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "EmyAChG",
+  "password": "{fridayHermosa}"
+}
+
+### Register a New User
+POST http://localhost:7777/api/users
+Content-Type: application/json
+
+{
+  "username": "Salome Chacon",
+  "password": "password123",
+  "name": "Salome",
+  "email": "testuser2@example.com",
+  "phone": "123-456-7890"
+}
+
+### Obtener Todos los Usuarios
+GET http://localhost:7777/api/users
+Authorization: Basic RW15QUNoRzpmcmlkYXlIZXJtb3Nh
+
+### Get a User by ID
+GET http://localhost:7777/api/users/1
+
+### Update a User
+PUT http://localhost:7777/api/users/1
+Content-Type: application/json
+
+{
+  "username": "updateduser",
+  "name": "Updated User",
+  "email": "updateduser@example.com",
+  "phone": "987-654-3210"
+}
+
+### Delete a User
+DELETE http://localhost:7777/api/users/1

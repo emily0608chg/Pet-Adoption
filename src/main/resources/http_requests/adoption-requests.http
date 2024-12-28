@@ -1,0 +1,54 @@
+### Register a new adoption (POST /api/adoption), you must login or if you are a new user you must register
+
+POST localhost:7777/api/adoption
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "user": {
+    "id": 7,
+    "username": "salome"
+  },
+  "pet": {
+    "id": 3,
+    "name": "Friday"
+  },
+  "status": "PENDING"
+}
+
+### Get an adoption by ID (GET /api/adoption/{id})
+GET localhost:7777/api/adoption/1
+Authorization: Bearer  // Replace with authenticated user token
+
+### Get all adoptions (GET /api/adoption) [Only ADMIN]
+GET localhost:7777/api/adoption
+Authorization: Bearer  // Replace with admin token
+
+### Update an existing adoption (PUT /api/adoption/{id})
+PUT localhost:7777/api/adoption/1
+Content-Type: application/json
+Authorization: Bearer  // Replace with valid token of the owner or admin
+
+{
+  "user": {
+    "id": 1,
+    "username": "updateduser"
+  },
+  "pet": {
+    "id": 2,
+    "name": "Buddy"
+  },
+  "status": "APPROVED"
+}
+
+### Delete an adoption by ID (DELETE /api/adoption/{id}) [Only ADMIN]
+DELETE localhost:7777/api/adoption/3
+Authorization: Bearer   // Replace with admin token
+
+### Approve an adoption (POST /api/adoption/{id}/approve) [Only ADMIN]
+POST localhost:7777/api/adoption/4/approve
+Authorization: Bearer   // Replace with admin token
+
+### Reject an adoption (POST /api/adoption/{id}/reject) [Only ADMIN]
+POST localhost:7777/api/adoption/1/reject
+Authorization: Bearer  // Replace with admin token

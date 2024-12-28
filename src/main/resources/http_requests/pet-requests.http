@@ -1,0 +1,31 @@
+### To create a pet, you must first log in, this request will return an access token and a refresh token that you will need to use in the other requests [Admin user]
+
+POST localhost:7777/api/auth/login
+Content-Type: application/json
+
+{
+"username": "adminUser2",
+"password": "securePassword"
+}
+
+### Create pet. This pet is already in the database, you must update the values
+
+POST localhost:7777/api/pets
+Content-Type: application/json
+Authorization: Bearer
+
+{
+"name": "Simba",
+"age": 4,
+"typeOfPet": {
+"id": 2
+},
+"location": "Mallorca"
+}
+
+
+### View created pets
+
+GET localhost:7777/api/pets
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5Vc2VyMiIsImV4cCI6MTczNDg5NTYwMiwiaWF0IjoxNzM0ODkyMDAyLCJyb2xlcyI6WyJBRE1JTiJdfQ.PRwDKaxcSSCIQBnvrQ7_Kwr_XOGBJlOmWU6oauJ2EGXAQaRWqolJrroLgTnXZjsxGx_l4hRtBr9XzlKh9YM3vTQwawzQpkZlxrR_Qw1Xj2kL1tQVAJGz-rW2GBpMfuWmmgPOlhTlG4j20nj5yYwRe8Gghwmb_JPPC5dOdIgrWxQ-O969_5KOA5gX3C83HFd6x2IVU6US0TqIeX2NGIvFDmWYUzRoBZk0szx5imLdJLCzNZQ1s_pI8ukraRntRbqVqPPUR0posxq5dsacMUAVsk-AdgQ105iZJS2hWrWrvKlYXVyAvSjNbgftmB91dUD7IV8h-_IyN9kq7GK3sTeIkw
+

@@ -1,0 +1,42 @@
+### Register a new user (POST /api/auth/register) (ROLE_USER)
+POST localhost:7777/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "salome",
+  "password": "password123",
+  "name": "Salome Mantilla",
+  "email": "salome@example.com",
+  "phone": "1234567890"
+}
+
+### Login with user credentials (POST /api/auth/login)
+POST localhost:7777/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "salome",
+  "password": "password123"
+}
+
+### Register a new admin (POST /api/auth/register)
+POST localhost:7777/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "ari_admin",
+  "password": "123password",
+  "name": "Ariana Chacón",
+  "email": "ariadmin@example.com",
+  "phone": "9876543210",
+  "adminKey": "admin_key"
+}
+
+### Login with admin credentials (POST /api/auth/login)
+POST localhost:7777/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "adminUser2",
+  "password": "securePassword"
+}
