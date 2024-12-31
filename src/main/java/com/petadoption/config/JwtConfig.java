@@ -39,7 +39,24 @@ public class JwtConfig {
     private RSAPrivateKey privateKey;
 
     /**
-     * Loads RSA keys from files in resources/keys when initializing the class.
+     * Initializes RSA private and public keys for use in JWT handling.
+     * This method is marked with the {@code @PostConstruct} annotation, meaning it will
+     * be invoked automatically after the bean's properties have been initialized by the
+     * Spring container.
+     * The method performs the following steps:
+     * 1. Reads the private key from a Base64-encoded PEM file located in the resource directory.
+     * 2. Reads the public key from a Base64-encoded PEM file located in the resource directory.
+     * 3. Decodes the Base64-encoded keys and converts them into RSA key objects using the
+     *    {@code KeyFactory} with an {@code RSA} algorithm.
+     * 4. Stores the decoded RSA keys as fields for use in JWT encoding and decoding.
+     * If the key files cannot be read, or there is an issue processing the keys, the method
+     * logs the error and throws an {@link IllegalStateException}, preventing the application
+     * from starting.
+
+     * This method is critical for ensuring the secure handling of JWTs by providing the RSA keys
+     * required for token signing and verification.
+
+     * @throws IllegalStateException if the RSA key files cannot be loaded or processed
      */
     @PostConstruct
     public void initKeys() {
@@ -75,6 +92,18 @@ public class JwtConfig {
         }
     }
 
+    /**
+     * Creates and configures a {@link JwtEncoder} bean used for encoding JWT tokens.
+
+     * The method initializes the encoder using RSA public and private keys. These keys are
+     * constructed into an {@link RSAKey} object, which is included in a {@link JWKSet}.
+     * A {@link JWKSource} is then created from the JWKSet and used to instantiate the
+     * {@link NimbusJwtEncoder}.
+
+     * This encoder is essential for generating JWT tokens signed using the configured RSA keys.
+     *
+     * @return a configured instance of {@link JwtEncoder}.
+     */
     @Bean
     public JwtEncoder jwtEncoder() {
         logger.info("Initializing the JWT Encoder with RSA keys...");
@@ -92,11 +121,19 @@ public class JwtConfig {
         return new NimbusJwtEncoder(jwkSource);
     }
 
-
+    /**
+     * Provides a configured {@link JwtDecoder} bean for decoding JWT tokens.
+     * This method initializes the decoder using RSA public keys. The public key
+     * is used to validate the signature of the JWT token, ensuring its authenticity.
+     * The decoder utilizes the {@link NimbusJwtDecoder} library to handle the
+     * decoding process and to interpret the token's claims.
+     * Logging is included to indicate the initialization of the JWT decoder with the RSA keys.
+     * @return a configured instance of {@link JwtDecoder} capable of decoding JWT tokens
+     * using a provided RSA public key.
+     */
     @Bean
     public JwtDecoder jwtDecoder() {
         logger.info("Initializing the JWT Decoder with RSA keys...");
-
         // Create the decoder using only the public key
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }

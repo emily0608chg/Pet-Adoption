@@ -3,10 +3,10 @@ POST localhost:7777/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "salome",
+  "username": "dafne",
   "password": "password123",
-  "name": "Salome Mantilla",
-  "email": "salome@example.com",
+  "name": "Dafne Pradelli",
+  "email": "dafne@example.com",
   "phone": "1234567890"
 }
 
@@ -15,7 +15,7 @@ POST localhost:7777/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "salome",
+  "username": "dafne",
   "password": "password123"
 }
 

@@ -80,7 +80,7 @@ public class AdoptionService {
 
     @Transactional(readOnly = true)
     public Optional<Adoption> getAdoptionById(Long id) {
-        Optional<Adoption> adoption = adoptionRepository.findById(id);
+        Optional<Adoption> adoption = adoptionRepository.findByIdWithUser(id);
         if (adoption.isEmpty()) {
             logger.warn("Adoption with ID {} not found", id);
             throw new AdoptionNotFoundException("Adoption not found with ID " + id);
@@ -130,20 +130,6 @@ public class AdoptionService {
         }
         adoptionRepository.deleteById(id);
         logger.info("Deleted adoption with ID {}", id);
-    }
-
-    @Transactional(readOnly = true)
-    public Iterable<Adoption> getAdoptionsByUserId(Long id) {
-        Iterable<Adoption> adoptions = adoptionRepository.findByUserId(id);
-        logger.info("Retrieved adoptions for user ID {}", id);
-        return adoptionRepository.findByUserId(id);
-    }
-
-    @Transactional(readOnly = true)
-    public Iterable<Adoption> getAdoptionsByPetId(Long id) {
-        Iterable<Adoption> adoptions = adoptionRepository.findByPetId(id);
-        logger.info("Retrieved adoptions for pet ID {}", id);
-        return adoptions;
     }
 
     @Transactional

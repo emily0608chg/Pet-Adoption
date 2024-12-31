@@ -59,6 +59,12 @@ public class PetService {
         return petRepository.findByStatus(PetStatus.AVAILABLE);
     }
 
+    //TODO add endpoint to check list of adopted pets
+    @Transactional(readOnly = true)
+    public List<Pet> getAllAdoptedPets() {
+        return petRepository.findByStatus(PetStatus.ADOPTED);
+    }
+
     @Transactional(readOnly = true)
     public Optional<Pet> getPetById(Long id) {
         Optional<Pet> pet = petRepository.findById(id);

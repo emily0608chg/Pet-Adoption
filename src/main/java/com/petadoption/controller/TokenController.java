@@ -29,6 +29,18 @@ public class TokenController {
         this.jwtService = jwtService;
     }
 
+    /**
+     * Handles the HTTP POST request for refreshing an access token using a provided refresh token.
+     * Validates the refresh token from the request body, and if valid, generates and returns a new access token.
+     * Returns an appropriate response status and message in case of invalid input, expired token, or unexpected errors.
+     *
+     * @param refreshTokenRequest the request body containing the refresh token required for generating a new access token.
+     *                            The refresh token must not be null or blank, as it is essential for authorization.
+     * @return a ResponseEntity containing a new access token in the response body if the refresh token is valid.
+     *         Returns HTTP 400 (BAD_REQUEST) if the refresh token is missing or invalid.
+     *         Returns HTTP 403 (FORBIDDEN) if the refresh token is expired or invalid.
+     *         Returns HTTP 500 (INTERNAL_SERVER_ERROR) if an unexpected error occurs.
+     */
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.getRefreshToken();

@@ -34,7 +34,7 @@ public class AdoptionSecurityService {
 
     public boolean isOwner(Authentication authentication, Long adoptionId) {
         String username = authentication.getName(); // Current username
-        return adoptionRepository.findById(adoptionId)
+        return adoptionRepository.findByIdWithUser(adoptionId)
                 .map(adoption -> adoption.getUser().getUsername().equals(username))
                 .orElse(false);
     }

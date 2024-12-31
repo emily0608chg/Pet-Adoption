@@ -20,9 +20,12 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * SecurityConfig is a Spring Security configuration class that defines
@@ -93,15 +96,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/token/refresh").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/adoption/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/adoption/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/adoption/{id}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.POST, "/api/adoption/{id}/approve").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/adoption/{id}/reject").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/adoption/{id}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/adoption/{id}").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/adoption/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/adoption/**").hasRole("USER")
                         .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/api/pets/**").hasAnyRole("ADMIN", "USER")
-                        .anyRequest().authenticated() // Todo lo demás requiere autenticación
+                        .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt ->
                         jwt.decoder(jwtDecoder)
@@ -121,20 +124,31 @@ public class SecurityConfig {
      * roles claim into granted authorities, ensuring proper logging of the JWT claims
      * and extracted*/
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles"); // Extraer de "roles"
-        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_"); // Prefijo de Spring Security
-
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+
+        // Configure the JwtGrantedAuthoritiesConverter
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+
+        // Associate the Claim "roles" to the prefix "ROLE_" (but we will review below to avoid duplicates)
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+
+        // We configure the conversion process and avoid the duplicate prefix
         converter.setJwtGrantedAuthoritiesConverter(jwt -> {
             logger.info("JWT Claims: {}", jwt.getClaims());
-            // Extraer roles antes de la conversión
+
+            // We extract the roles from the JWT (using "roles" like Claim)
             List<String> roles = jwt.getClaimAsStringList("roles");
             if (roles == null) {
-                roles = List.of(); // Si no hay rol, retorna vacío
+                roles = List.of(); // If there are no roles, we return an empty array
             }
-            logger.info("Roles from the token: {}", roles); // Debug en logs
-            return grantedAuthoritiesConverter.convert(jwt);
+            logger.info("Roles from the token: {}", roles);
+
+            // We ensure that each role has a "ROLE_" prefix
+            return roles.stream()
+                    .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role) // Avoid duplicate prefix
+                    .map(SimpleGrantedAuthority::new) // Converts to GrantedAuthority
+                    .collect(Collectors.toList()); // Form the complete list of GrantedAuthority
         });
 
         return converter;
@@ -163,7 +177,7 @@ public class SecurityConfig {
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),
-                    user.getAuthorities() // Roles extraídos del usuario
+                    user.getAuthorities() // Roles extracted from the user
             );
         });
         authProvider.setPasswordEncoder(passwordEncoder);

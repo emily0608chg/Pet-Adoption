@@ -2,43 +2,43 @@
 
 POST localhost:7777/api/adoption
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiZGFmbmUiLCJleHAiOjE3MzU2Njg2NTcsImlhdCI6MTczNTY2NTA1Nywicm9sZXMiOlsiVVNFUiJdfQ.vIPU1eL-XNlxHSw2c7Z-MMwsQckrTejlc4MPwuv1MDWOPQDgTFnHkBR3NufM0Ar3GQ7k_z-cOnNGCW9VoPAACUm3KIXqlbSyOz9uMG7oXOaLsJigdsANqN9EpVHQGPHCmULasVKqvzVaubDRwuicZlkVzCJ5EgbJgBLJ12pXBMTkvhyS-P2iAEJ181j75CDSvHV3eoXaXwKo6WpWbZF4yJNsrwlmnV8C3SEo0PEA4bfOmCKascW5Ou1BdEwJ6gV7PqbZVOcpE51P6QQRdj0I5tfh7pJvmPqgY2pHDv4p4lF5l6wpqLLsQhE-6OzChRxt9FcBWOBVquRx_HZRTiO7WA
 
 {
   "user": {
-    "id": 7,
-    "username": "salome"
+    "id": 12,
+    "username": "dafne"
   },
   "pet": {
-    "id": 3,
-    "name": "Friday"
+    "id": 5,
+    "name": "Billy"
   },
   "status": "PENDING"
 }
 
 ### Get an adoption by ID (GET /api/adoption/{id})
-GET localhost:7777/api/adoption/1
-Authorization: Bearer  // Replace with authenticated user token
+GET localhost:7777/api/adoption/4
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoic2Fsb21lIiwiZXhwIjoxNzM2MjU2MDgyLCJpYXQiOjE3MzU2NTEyODIsInJvbGVzIjpbIlJPTEVfVVNFUiJdfQ.LGBUnwM09OczptJ2VluKYyta1l4p7tiiYefmvri25ny1kbf7MuxLpEaT6akr9N1bhBQ2vkCbD7uNjZfl9geiAG2_Lg4zYkQpDLBCMROTSQciyu4bAvLzoIqtjJRhwiTdDKe7NiVhwx8c7N95f4aJQzWM9zpHO8nSFJ62xxQ2015a5GQkLhaHULT8qdTvSZ2caRR_LjG1gM6u5EI1rWUzKtHTxJ47VhjkNfx6nQgHPwahMrP4vGM9iW7pFs_tpKC7bO8IkafqbLA-byfbuvk4EhV3tFUcQyAXtKadLw7JIGt0aUYjlfgyIT_XEBmktnarvfdZC7Kz6ce3d-laYzeZ1w // Replace with authenticated user token
 
 ### Get all adoptions (GET /api/adoption) [Only ADMIN]
 GET localhost:7777/api/adoption
-Authorization: Bearer  // Replace with admin token
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5Vc2VyMiIsImV4cCI6MTczNTY2ODc0MSwiaWF0IjoxNzM1NjY1MTQxLCJyb2xlcyI6WyJBRE1JTiJdfQ.Id0ZIsZ1CdNa0Z50u31zyLG2QGup4x6FJPBDUmmYx-R7-FZijARNIXget14qlQBJSSae8oqxAbTDWTKKlbaErH7WdOivXVMRxih8Gyarw1aNPpzD-lqgtzvwaZuGRwmv1NIlGKhE6QLg6rY535TSunh_LdhqR4FUayPtEnV9w-zV2mygQbdZJA2cQcbrxFSjzlGujlvw52ek9jqUqc6WxaTGCtVYfS8NMfQNtE8yKVQk3Quyzq3DPeLRTe4_m27ETi2DPf0mFb8zStNWLHiAOzF3eWtQFlmUPXG8x9J1H7Mdm0rKkonxKrSn3EIoX0e9FtMfeGM1QNj_WGVUlwggyg // Replace with admin token
 
 ### Update an existing adoption (PUT /api/adoption/{id})
-PUT localhost:7777/api/adoption/1
+PUT localhost:7777/api/adoption/4
 Content-Type: application/json
 Authorization: Bearer  // Replace with valid token of the owner or admin
 
 {
   "user": {
-    "id": 1,
-    "username": "updateduser"
+    "id": 10,
+    "username": "Pedro"
   },
   "pet": {
-    "id": 2,
-    "name": "Buddy"
+    "id": 5,
+    "name": "Billy"
   },
-  "status": "APPROVED"
+  "status": "PENDING"
 }
 
 ### Delete an adoption by ID (DELETE /api/adoption/{id}) [Only ADMIN]
@@ -46,9 +46,9 @@ DELETE localhost:7777/api/adoption/3
 Authorization: Bearer   // Replace with admin token
 
 ### Approve an adoption (POST /api/adoption/{id}/approve) [Only ADMIN]
-POST localhost:7777/api/adoption/4/approve
-Authorization: Bearer   // Replace with admin token
+POST localhost:7777/api/adoption/7/approve
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5Vc2VyMiIsImV4cCI6MTczNTY2OTA1MiwiaWF0IjoxNzM1NjY1NDUyLCJyb2xlcyI6WyJBRE1JTiJdfQ.o6ak8I25Vwx_Oqq442DOadu5eo8TwBFJkrxROZJMSay0EvDekD_Hy45-iVP4baJxq3QFudeV0LpRykbDQ563YUEhFpzMSP-QSPPEvPhS6V8VXIlIQjBKbEstE6XaXoNROqBEsYYM_G0RBEzbsHnOI-SsGbHSQWwV1je5HfxEpfskYW2bxJtEH-DzKWXwGmLuqjinkRjioI6l7Xbblwqh9eRUsn_7Jqpbkv21H3C8CySCqCyzUkrrsBRJkUxY73nOYC5o193IEpX5SCuFKnYTSHJYL9wZBTD5hcNIMISv3acRzz8A_4ZpRZiTKwRG-EJx8xC8dU8XQ11VOlI4wESdzw  // Replace with admin token
 
 ### Reject an adoption (POST /api/adoption/{id}/reject) [Only ADMIN]
-POST localhost:7777/api/adoption/1/reject
-Authorization: Bearer  // Replace with admin token
+POST localhost:7777/api/adoption/6/reject
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5Vc2VyMiIsImV4cCI6MTczNTY2OTA1MiwiaWF0IjoxNzM1NjY1NDUyLCJyb2xlcyI6WyJBRE1JTiJdfQ.o6ak8I25Vwx_Oqq442DOadu5eo8TwBFJkrxROZJMSay0EvDekD_Hy45-iVP4baJxq3QFudeV0LpRykbDQ563YUEhFpzMSP-QSPPEvPhS6V8VXIlIQjBKbEstE6XaXoNROqBEsYYM_G0RBEzbsHnOI-SsGbHSQWwV1je5HfxEpfskYW2bxJtEH-DzKWXwGmLuqjinkRjioI6l7Xbblwqh9eRUsn_7Jqpbkv21H3C8CySCqCyzUkrrsBRJkUxY73nOYC5o193IEpX5SCuFKnYTSHJYL9wZBTD5hcNIMISv3acRzz8A_4ZpRZiTKwRG-EJx8xC8dU8XQ11VOlI4wESdzw // Replace with admin token

@@ -1,0 +1,34 @@
+### Login with admin credentials to access to all requests.
+POST localhost:7777/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "adminUser2",
+  "password": "securePassword"
+}
+
+### Get all users
+GET http://localhost:7777/api/users
+Authorization: Bearer eyJraWQiOiJyc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5Vc2VyMiIsImV4cCI6MTczNTY2ODc0MSwiaWF0IjoxNzM1NjY1MTQxLCJyb2xlcyI6WyJBRE1JTiJdfQ.Id0ZIsZ1CdNa0Z50u31zyLG2QGup4x6FJPBDUmmYx-R7-FZijARNIXget14qlQBJSSae8oqxAbTDWTKKlbaErH7WdOivXVMRxih8Gyarw1aNPpzD-lqgtzvwaZuGRwmv1NIlGKhE6QLg6rY535TSunh_LdhqR4FUayPtEnV9w-zV2mygQbdZJA2cQcbrxFSjzlGujlvw52ek9jqUqc6WxaTGCtVYfS8NMfQNtE8yKVQk3Quyzq3DPeLRTe4_m27ETi2DPf0mFb8zStNWLHiAOzF3eWtQFlmUPXG8x9J1H7Mdm0rKkonxKrSn3EIoX0e9FtMfeGM1QNj_WGVUlwggyg
+Content-Type: application/json
+
+### Get user by id
+GET http://localhost:7777/api/users/1
+Authorization: Bearer
+Content-Type: application/json
+
+### Update user
+PUT http://localhost:7777/api/users/1
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone": "1234567890"
+}
+
+### Delete user
+DELETE http://localhost:7777/api/users/1
+Authorization: Bearer
+Content-Type: application/json

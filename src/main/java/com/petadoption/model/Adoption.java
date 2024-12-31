@@ -24,7 +24,7 @@ public class Adoption {
     @JoinColumn(name = "pet_id", nullable = false)
     Pet pet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
